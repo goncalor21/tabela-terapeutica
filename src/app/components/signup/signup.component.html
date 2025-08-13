@@ -1,0 +1,109 @@
+<div class="background">
+    <section class="h-100 gradient-form">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-xl-10">
+                    <div class="card rounded-3 text-black">
+                        <div class="row g-0">
+                            <div class="col-lg-6">
+                                <div class="card-body p-md-5 mx-md-4">
+
+                                    <div class="text-center">
+                                        <img src="../../assets/SemFundo_Azul.png" style="width: 250px;" alt="logo">
+                                        <h4 class="mt-1 mb-5 pb-1"></h4>
+                                    </div>
+
+                                    <form [formGroup]="signupForm">
+
+                                        <div class="form-outline mb-4">
+                                            <input formControlName="userName" type="text" class="form-control"
+                                                id="userName" aria-describedby="userNameHelp"
+                                                placeholder="Primeiro e ultimo nome">
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['userName'].dirty && signupForm.hasError('required', 'userName')"
+                                            class="text-danger">*É necessário primeiro e ultimo nome</small>
+                                        <!-- <small
+                                            *ngIf="signupForm.controls['userName'].dirty && signupForm.hasError('singleSpace')"
+                                            class="text-danger">*Por favor, inserir apenas primeiro e ultimo nome</small> -->
+
+                                        <div class="form-outline mb-4">
+                                            <input formControlName="email" type="email" class="form-control"
+                                                id="InputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['email'].dirty && signupForm.hasError('required', 'email')"
+                                            class="text-danger">*É necessário E-mail</small>
+                                        <div class="form-outline mb-4">
+                                            <div class="placeHolder">Data de nascimento</div>
+                                            <input formControlName="dataNascimento" type="date" class="form-control"
+                                                id="dataNascimento" aria-describedby="dataNascimentoHelp"
+                                                placeholder="Data de nascimento">
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['dataNascimento'].dirty && signupForm.hasError('required', 'dataNascimento')"
+                                            class="text-danger">*É necessário data de nascimento</small>
+
+                                        <div class="form-outline mb-4">
+                                            <input formControlName="nOrdemMedicos" type="number" class="form-control"
+                                                id="nOrdemMedicos" placeholder="Numero da Ordem Profissional">
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['nOrdemMedicos'].dirty && signupForm.hasError('required', 'nOrdemMedicos')"
+                                            class="text-danger">*É necessário numero de ordem</small>
+
+                                        <div class="form-outline mb-4">
+                                            <select formControlName="profissao" class="form-select" id="profissao"
+                                                placeholder="Profissão">
+                                                <option value="Enfermeiro">Enfermeiro</option>
+                                                <option value="Medico">Medico</option>
+                                                <option value="Outro">Outro</option>
+                                            </select>
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['profissao'].dirty && signupForm.hasError('required', 'profissao')"
+                                            class="text-danger">*É necessário escolher a Profissão</small>
+
+                                        <div class="form-outline mb-4">
+                                            <input formControlName="password"  [type]="type" class="form-control"
+                                                id="exampleInputPassword1" placeholder="Password">
+                                            <span (click)="hideShowPass()" style="cursor: pointer;"
+                                                class="fa {{eyeIcon}}"></span>
+                                        </div>
+                                        <small
+                                            *ngIf="signupForm.controls['password'].dirty && signupForm.hasError('required', 'password')"
+                                            class="text-danger">*É necessário Password</small>
+
+                                        <div class="text-center pt-1 mb-5 pb-1 registButton">
+                                            <button (click)="onSignUp()" [disabled]="isButtonBlocked"
+                                                class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                type="button">
+                                                <span *ngIf="isButtonBlocked" >
+                                                    <mat-spinner diameter="20" color="primary"></mat-spinner>
+                                                  </span>Registar</button>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-center pb-4">
+                                            <p class="mb-0 me-2">Ja tem uma conta?</p>
+                                            <button type="button" routerLink="/login"
+                                                class="btn btn-outline-danger">Entrar</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-flex justify-content-start align-items-center gradient-custom-2">
+                                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                                    <h2 class="mb-4">Juntos por melhores resultados!</h2>
+                                    <p class="small mb-0">Queremos trazer aos doentes uma forma inovadora de lidar com a
+                                        prescrição médica.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

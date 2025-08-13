@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Instruções</h1>
+<div mat-dialog-content>
+    <p>A tabela é gerada através do texto inserido na caixa. </p>
+    <p>
+        Para obter os melhores resultados necessita de introduzir o
+        <span class="medicamento">nome do medicamento</span>, seguido da
+        <span class="quantidade">quantidade</span>,
+        <span class="unidade">unidade</span> e
+        <span class="frequencia-diaria">frequência diária</span>.
+    </p>
+    <p>
+        Ex:
+        <span class="medicamento">Paracetamol </span>
+        <span class="quantidade">1000</span>
+        <span class="unidade">mg </span>
+        <span class="frequencia-diaria">1id</span>
+        OU
+        <span class="medicamento">Paracetamol </span>
+        <span class="quantidade">1000</span>
+        <span class="unidade">mg </span>
+        <span class="frequencia-diaria">1 ao Pequeno almoço + 1 ao Jantar.</span>
+    </p>
+    <p>
+        - Os vários medicamentos devem ser separados por: , ; ou parágrafo
+    </p>
+    <p>
+        A tabela é editável, por favor, selecione as células para editar. Você também pode acrescentar notas.
+    </p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button class="custom-button" (click)="onNoClick()">Fechar</button>
+</div>

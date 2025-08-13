@@ -1,0 +1,86 @@
+.gradient-custom-2 {
+    /* fallback for old browsers */
+    background: #f0f8ff;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #87cefa, #00bfff, #1e90ff, #4169e1);
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #677f88 0%, #677f88 100%);
+}
+
+@media (min-width: 768px) {
+    .gradient-form {
+        height: 100vh !important;
+    }
+    .placeHolder {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 6px;
+        margin-left: 6px;
+        font-size: 16px;
+        color: #677f88;
+    }
+}
+
+@media (min-width: 769px) {
+    .gradient-custom-2 {
+        border-color: #677f88;
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+
+    .placeHolder {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 6px;
+        margin-left: 6px;
+        font-size: 16px;
+        color: #677f88;
+    }
+    
+    .col-lg-6 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+.background {
+    min-height: 100vh;
+    background: url('../../../assets/background.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.form-control{
+    color: #677f88;
+}
+
+
+.placeHolder {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    font-size: 16px;
+    color: #677f88;
+}
+
+.small {
+    font-size: 14px;
+}
+
+.fa {
+    display: flex;
+    justify-content: end;
+    margin-top: -6.5%;
+    margin-right: 4%;
+}
+
+.registButton {
+    justify-content: center;
+}

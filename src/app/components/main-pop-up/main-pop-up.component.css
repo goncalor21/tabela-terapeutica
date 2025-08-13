@@ -1,0 +1,50 @@
+/* In your component's CSS file or a global stylesheet */
+
+
+.mat-mdc-dialog-actions {
+  display: flex;
+  justify-content: end;
+}
+
+.custom-button {
+  background-color: #677F88;
+  /* Change the background color to your preference */
+  color: #fff;
+  /* Change the text color to your preference */
+  border-color: rgba(77, 77, 77, 0.7);
+  padding: 10px 20px;
+  /* Adjust padding as needed */
+  border-radius: 30px;
+  /* Add rounded corners if desired */
+  cursor: pointer;
+  /* Add a pointer cursor on hover */
+  margin-right: 10px;
+  /* Add some margin between the buttons */
+}
+
+.custom-button:hover {
+  background-color: #fff;
+  /* Change the background color on hover if desired */
+  color: #677F88;
+
+}
+
+.medicamento {
+  color: blue;
+  /* Cor para "medicamento" */
+}
+
+.quantidade {
+  color: red;
+  /* Cor para "quantidade" */
+}
+
+.unidade {
+  color: green;
+  /* Cor para "unidade" */
+}
+
+.frequencia-diaria {
+  color: orange;
+  /* Cor para "frequência diária" */
+}

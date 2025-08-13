@@ -1,0 +1,9 @@
+@media print {
+    /* hide all elements except the table */
+    body * {
+      visibility: hidden;
+    }
+    table {
+      visibility: visible;
+    }
+  }

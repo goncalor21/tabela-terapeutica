@@ -1,0 +1,27 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "signUpUsers": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    },
+    {
+      "userName": "Gonçalo Ramalho",
+      "email": "goncalokkk@gmail.com",
+      "dataNascimento": "2003-01-02",
+      "nOrdemMedicos": 1234,
+      "password": "jjjjjjjjjj",
+      "id": 2
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
