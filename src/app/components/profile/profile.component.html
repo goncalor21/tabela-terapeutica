@@ -1,0 +1,88 @@
+<div class="background" style="background-image: url(../../../assets/profileBackground.png); background-size: cover;">
+    <div class="container py-5 h-100">
+        <div class="cabecalho">
+            <div id="barraCabecalho" class="barraCabecalho">
+                <div class="imagemLogo" routerLink="/mainPage">
+                </div>
+                <div class="profileButtons d-flex align-items-center">
+                    <a href="/mainPage" class="btn btn-outline-secondary d-flex align-items-center">
+                        Pagina Principal
+                    </a>
+                    <div class="btn-group ml-2">
+                        <button routerLink="/login" (click)="logout()" type="button" class="btn btn3-outline-secondary">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Sair</button>
+                    </div>
+                </div>
+            </div>
+            <div class="toggle-btn">
+                <i class="fa-solid fa-bars" (click)="toggleDropdown()"></i>
+            </div>
+            <div class="dropdown_menu" #dropdownMenu>
+                <a href="/mainPage">Pagina Principal</a>
+                <a href="/login">Sair</a>
+            </div>
+        </div>
+        <div class="myProfile d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-12">
+                <div class="card rounded-4 text-black">
+                    <div class="row g-5">
+                        <div class="col-lg-6">
+                            <div class="card-body p-md-5 mx-md-5">
+
+                                <h1 class="myProfileHeader">
+                                    <i class="fas fa-user-circle"></i>Perfil
+                                </h1>
+
+                                <div class="user-info" *ngIf="user">
+                                    <label for="userName">Nome:</label>
+                                    <span id="userName">{{ user.nome }}</span>
+
+                                    <label for="email">E-mail:</label>
+                                    <span id="email">{{ user.email }}</span>
+
+                                    <label for="dataNascimento">Data de Nascimento:</label>
+                                    <span id="dataNascimento">{{ user.dataNascimento }}</span>
+
+                                    <label for="nOrdemMedicos">Número Ordem dos Médicos:</label>
+                                    <span id="nOrdemMedicos">{{ user.nOrdemMedicos }}</span>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 justify-content-center">
+                            <mat-form-field class="tableFilter">
+                                <mat-label>Procurar Tabela - coloque apenas o numero</mat-label>
+                                <input class="tableFilterInput" matInput placeholder="" search
+                                    (keyup)="applyFilter($event)" #input />
+                            </mat-form-field>
+
+                            <div class="mat-elevation-z8">
+                                <table mat-table matSort [dataSource]="dataSource">
+                                    <ng-container matColumnDef="idTabela">
+                                        <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            TABELAS</th>
+                                        <td class="mat-cell" mat-cell *matCellDef="let row">{{row}}</td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr class="mat-row" mat-row *matRowDef="let row; columns: displayedColumns;"
+                                        (click)="onRowClick(row)"></tr>
+
+                                    <tr *matNoDataRow>
+                                        <td class="mat-cell" colspan="4"> The filter does not match any item in the
+                                            data
+                                            {{input.value}}</td>
+                                    </tr>
+                                </table>
+                                <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="[2,5,10,20]"
+                                    (page)="pageChangeSize($event)">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

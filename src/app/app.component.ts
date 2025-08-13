@@ -1,0 +1,16 @@
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'tabela-terapeutica';
+
+  constructor(private authService: SocialAuthService) {
+  }
+
+
+}

@@ -1,0 +1,133 @@
+html,
+body,
+div,
+span,
+a,
+img,
+ul,
+li,
+form,
+table,
+tbody,
+thead,
+tr,
+th,
+td {
+    border: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    padding-left: 0px;
+}
+
+html,
+body {
+    background-color: #fff;
+    color: #273136;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body,
+form,
+.Page {
+    height: 100%;
+}
+
+h1, .Heading1, h2, .Heading2, h3, .Heading3, h4, .Heading4 {
+    margin: 0 0 10px;
+    color: #273136;
+    font-weight: 300;
+  }
+
+.header {
+    background: linear-gradient(to right, #52646c 0%, #52646c 100%);
+    border-bottom: 1px solid #bbb;
+    box-shadow: 0 0 10px 0 rgba(50, 50, 50, 0.24);
+    color: #fff;
+    display: table;
+    height: 60px;
+    left: 0;
+    margin: 0;
+    padding: 1;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+}
+
+
+.imgHeader {
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    line-height: 50px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+    z-index: 2;
+}
+
+.imgHeader a img {
+    vertical-align: middle;
+}
+
+.application_title img {
+    height: 40px;
+}
+
+.AllContent{
+    background:rgb(252, 252, 248);
+}
+
+
+.MainContent {
+    margin: 2%;
+    padding: 5%;
+    background:rgb(252, 252, 248);
+}
+
+
+.content-base {
+    min-height: calc(100vh - 90px);
+    margin: 0 auto;
+    padding: 30px 25px;
+    background-color: #fcfcfc;
+    max-width: 75%;
+}
+
+.page-title {
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid gray;
+}
+
+.Heading2 {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 38px;
+}
+
+.margin-top20 {
+    margin-top: 20px !important;
+}
+
+.margin-bottom15 {
+    margin-bottom: 15px !important;
+}
+
+.Heading3 {
+    font-size: 26px;
+    line-height: 33px;
+    font-weight: 500;
+  }

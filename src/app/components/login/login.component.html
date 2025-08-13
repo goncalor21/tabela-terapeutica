@@ -1,0 +1,107 @@
+<div class="background">
+  <div class="gradient-form">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+
+                  <div class="text-center">
+                    <img src="../../../assets/SemFundo_Azul.png" style="width: 250px;" alt="logo">
+                    <h4 class="mt-1 mb-5 pb-1"></h4>
+                  </div>
+
+                  <form [formGroup]="loginForm">
+
+                    <div class="form-outline mb-4">
+                      <input formControlName="email" type="email" id="form2Example11" class="form-control"
+                        placeholder="Insira aqui o seu email" />
+                    </div>
+                    <small *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required', 'email')"
+                      class="text-danger">*E-mail is required</small>
+
+                    <div class="form-outline mb-4"
+                      [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+                      <input formControlName="password" [type]="type" placeholder="Insira aqui a sua password"
+                        id="form2Example22" class="form-control">
+                      <span (click)="hideShowPass()" style="cursor: pointer;" class="fa {{eyeIcon}}"></span>
+                    </div>
+                    <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')"
+                      class="text-danger">*Password is required</small>
+
+                    <div class="form-inline fr mt-4"><a id="forgot" style="color: #677f88;" class="font-weight-bold"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Esqueceu-se da password?</a>
+                    </div>
+
+                    <div class="text-center pt-1 mb-5 pb-1">
+
+                      <button (click)="onLogin()" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 w-100"
+                        type="button">Entrar</button>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">Ainda não tem uma conta?</p>
+                      <button type="button" routerLink="/signup" class="btn btn-outline-danger">Crie uma!</button>
+                    </div>
+                    <div class="mx-3 my-2 py-2 bordert">
+                      <div class="text-center py-3">
+                        <!-- <a href="https://www.facebook.com" target="_blank" class="px-2"><img
+                            src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""></a>
+                        <a href="https://www.google.com" target="_blank" class="px-2"><img
+                            src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+                            alt=""></a> -->
+                      </div>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex justify-content-center align-items-center text-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <h2 class="mb-4">Juntos por melhores resultados!</h2>
+                  <p class="small mb-0">Queremos trazer uma forma inovadora de lidar com a prescrição médica.</p>
+                  <button type="button" routerLink="/mainPage" class="tryButton">Experimente já!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="isLoading" class="overlay">
+  <div class="loader"></div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="margin-top:50%">
+      <div class="model-header">
+        <p class="modal-title" id="exampleModalLabel" style="margin:12px"> <span
+            style="font-size: 25px;font-weight: 700; color: #677f88;">Esqueceu-se da
+            password?</span><br>
+          <small style="font-size: 16px;">Por favor, indique o seu e-mail:</small>
+        </p>
+
+
+      </div>
+      <form [formGroup]="newPasswordForm">
+        <div class="form-outline mb-4" style="padding: 12px;">
+          <input formControlName="email" type="email" placeholder="Insira aqui o seu e-mail" id="modalForgotForm"
+            class="form-control">
+          <small *ngIf="newPasswordForm.controls['email'].dirty && newPasswordForm.hasError('required', 'email')"
+            class="text-danger">*E-mail is required</small>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Fechar</button>
+        <button type="button" [disabled]="isLoading" (click)="forgotPassword()" data-bs-dismiss="modal"
+          class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
