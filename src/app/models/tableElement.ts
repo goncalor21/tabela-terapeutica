@@ -6,5 +6,9 @@ export interface TableElement {
     lanche: string;
     jantar: string;
     deitar: string;
-    notas?: string;
-}
+    notas: string;
+  }
+  
+  export interface ParseResult {
+    items: TableElement[];
+  }
