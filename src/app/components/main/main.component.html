@@ -1,232 +1,145 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3C35DCBD2"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
 <body>
-  <div class="container">
-    <div class="cabecalho">
-      <div id="barraCabecalho" class="barraCabecalho">
-        <div class="imagemLogo" (click)="reloadPage()">
-        </div>
-        <mat-form-field class="searchBar">
-          <input class="searchInput" type="search" placeholder="Pesquisar Tabelas" aria-label="Search" matInput
-            [(ngModel)]="searchText" (input)="onSearch()" [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete" class="searchAutocomplete">
-            <mat-option *ngFor="let result of searchResults" [value]="result" (click)="showTable(result)">{{ result
-              }}</mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <div class="d-flex align-items-center">
-          <a href="/profile" class="btn btn-outline-secondary d-flex align-items-center" *ngIf="isLoggedIn">
-            <i class="fas fa-user-circle mr-2" *ngIf="isLoggedIn"></i> Perfil
-          </a>
-          <div class="btn-group ml-2">
-            <button routerLink="/login" (click)="logout()" type="button" class="btn btn3-outline-secondary">
-              <i class="fas fa-sign-out-alt mr-2"></i> Sair</button>
-          </div>
-        </div>
-      </div>
-      <div class="toggle-btn">
-        <i class="fa-solid fa-bars" (click)="toggleDropdown()"></i>
-      </div>
-      <div class="dropdown_menu" #dropdownMenu>
-        <a href="/profile">Perfil</a>
-        <a href="/login" (click)="logout()">Sair</a>
-      </div>
-      <mat-form-field class="searchBarPhone">
-        <input class="searchInput" type="search" placeholder="Pesquisar Tabelas" aria-label="Search" matInput
-          [(ngModel)]="searchText" (input)="onSearch()" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete" class="searchAutocomplete">
-          <mat-option *ngFor="let result of searchResults" [value]="result" (click)="showTable(result)">{{ result
-            }}</mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-    <div class="input-group">
-      <div class="popUp">
-        <button type="submit" class="btn2 popUpButton" (click)="openDialog()">Ajuda</button>
-      </div>
-      <form (submit)="handleSubmit()" class="formTable">
-        <textarea [(ngModel)]="textareaValue" name="Prescricao" id="pres1" type="text" class="form-control1"
-          style="color: rgb(110, 110, 110);"
-          placeholder="Exemplo: &#10;&#10;Ácido acetilsalicílico 100mg 1 ao almoço, Bisoprolol 5mg 1 ao pequeno-almoço, Ramipril 2.5mg 1 ao pequeno-almoço + 1 ao jantar &#10;&#10;OU &#10;&#10; Ácido acetilsalicílico 100mg 1id, Bisoprolol 5mg 1id, Ramipril 2.5mg 2id">
+  <div class="page-wrapper">
 
-        </textarea>
-        <div class="btn2-group ml-2">
-          <button type="submit" class="btn2 btn2-outline-secondary">Gerar Documento</button>
-        </div>
+    <!-- HEADER -->
+    <header class="header-glass">
+      <div class="logo" (click)="reloadPage()"></div>
+      <nav class="header-actions">
+        <a href="/profile" class="profile-btn" *ngIf="isLoggedIn">
+          <i class="fas fa-user-circle"></i> Perfil
+        </a>
+      </nav>
+    </header>
+
+    <!-- INPUT AREA -->
+    <main class="main-section">
+      <form (submit)="handleSubmit()" class="glass-form">
+        <textarea [(ngModel)]="textareaValue" name="Prescricao" id="pres1"
+          placeholder="Digite a prescrição..."></textarea>
+        <button type="submit" class="btn-primary">⚡ Gerar Documento</button>
       </form>
-    </div>
+
+      <!-- TABLE PREVIEW -->
+      <section id="pre_visualizacao" class="glass-preview">
+
+        <table mat-table [dataSource]="dataSource" class="styled-table mat-elevation-z8" #elRef>
+
+          <!-- Comprimido -->
+          <ng-container matColumnDef="comprimido">
+            <th mat-header-cell *matHeaderCellDef class="header"> Comprimido </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else comprimidoView">
+                <input class="editTableInput" [(ngModel)]="element.comprimido" />
+              </ng-container>
+              <ng-template #comprimidoView>{{ element.comprimido }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Jejum -->
+          <ng-container matColumnDef="jejum">
+            <th mat-header-cell *matHeaderCellDef class="header"> Jejum </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else jejumView">
+                <input class="editTableInput" [(ngModel)]="element.jejum" />
+              </ng-container>
+              <ng-template #jejumView>{{ element.jejum }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Pequeno Almoço -->
+          <ng-container matColumnDef="peqAlmoco">
+            <th mat-header-cell *matHeaderCellDef class="header"> P. Almoço </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else peqView">
+                <input class="editTableInput" [(ngModel)]="element.peqAlmoco" />
+              </ng-container>
+              <ng-template #peqView>{{ element.peqAlmoco }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Almoço -->
+          <ng-container matColumnDef="almoco">
+            <th mat-header-cell *matHeaderCellDef class="header"> Almoço </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else almocoView">
+                <input class="editTableInput" [(ngModel)]="element.almoco" />
+              </ng-container>
+              <ng-template #almocoView>{{ element.almoco }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Lanche -->
+          <ng-container matColumnDef="lanche">
+            <th mat-header-cell *matHeaderCellDef class="header"> Lanche </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else lancheView">
+                <input class="editTableInput" [(ngModel)]="element.lanche" />
+              </ng-container>
+              <ng-template #lancheView>{{ element.lanche }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Jantar -->
+          <ng-container matColumnDef="jantar">
+            <th mat-header-cell *matHeaderCellDef class="header"> Jantar </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else jantarView">
+                <input class="editTableInput" [(ngModel)]="element.jantar" />
+              </ng-container>
+              <ng-template #jantarView>{{ element.jantar }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Ao Deitar -->
+          <ng-container matColumnDef="deitar">
+            <th mat-header-cell *matHeaderCellDef class="header"> Ao deitar </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else deitarView">
+                <input class="editTableInput" [(ngModel)]="element.deitar" />
+              </ng-container>
+              <ng-template #deitarView>{{ element.deitar }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Notas -->
+          <ng-container matColumnDef="notas">
+            <th mat-header-cell *matHeaderCellDef class="header"> Notas </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="isEditMode; else notasView">
+                <input class="editTableInput" [(ngModel)]="element.notas" />
+              </ng-container>
+              <ng-template #notasView>{{ element.notas }}</ng-template>
+            </td>
+          </ng-container>
+
+          <!-- Rows -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
 
 
-    <section id="pre_visualizacao" class="pre_visualizacao">
-      <div id="documento" class="documento">
-        <div class="printHeader">
-
-          <div class="printHeaderText">
-            <img *ngIf="tableId" class="imgPrintHeader" src="../../../assets/LogoheaderPrint.png" alt="">
-            <div class="headerBlock">
-              <p *ngIf="medicName" class="tableIdPrint">Dr(a). {{ medicName }}</p>
-              <p *ngIf="tableId" class="tableIdPrint">ID: {{ tableId }}</p>
-              <p *ngIf="date" class="tableIdPrintData"> {{ date }}</p>
-            </div>
-
-          </div>
+        <div class="preview-actions">
+          <button *ngIf="tableId" (click)="onRowClick()" class="btn-secondary">✏ Editar</button>
+          <button (click)="printTable()" class="btn-primary">🖨 Imprimir</button>
         </div>
-        <div class="btn-group ml-2">
-          <button *ngIf="tableId" (click)="onRowClick()" type="button" class="btn4-outline-secondary">
-            <i class="fa-regular fa-pen-to-square"></i> Editar</button>
-        </div>
-        <ng-container>
+      </section>
+    </main>
 
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" style="page-break-inside:auto" #elRef>
-            <ng-container matColumnDef="comprimido">
-              <th mat-header-cell class="header" *matHeaderCellDef style="width: 300px;"> Comprimido </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.comprimido">
-                </ng-container>
-                <ng-template class="element" #showValue>
-
-                    {{ element.comprimido }}
-            
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="jejum">
-              <th mat-header-cell class="header" *matHeaderCellDef> Jejum </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.jejum">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.jejum }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="peqAlmoco">
-              <th mat-header-cell class="header" *matHeaderCellDef> P. Almoço </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.peqAlmoco">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.peqAlmoco }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="almoco">
-              <th mat-header-cell class="header" *matHeaderCellDef> Almoço </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.almoco">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.almoco }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="lanche">
-              <th mat-header-cell class="header" *matHeaderCellDef> Lanche </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.lanche">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.lanche }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="jantar">
-              <th mat-header-cell class="header" *matHeaderCellDef> Jantar </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.jantar">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.jantar }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="deitar">
-              <th mat-header-cell class="header" *matHeaderCellDef> Ao deitar </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.deitar">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.deitar }}
-                </ng-template>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="notas">
-              <th mat-header-cell class="header" *matHeaderCellDef> Notas </th>
-              <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="isEditMode; else showValue">
-                  <input class="editTableInput" [(ngModel)]="element.notas">
-                </ng-container>
-                <ng-template class="element" #showValue>
-                  {{ element.notas }}
-                </ng-template>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" style="page-break-inside:avoid; page-break-after:auto"></tr>
-          </table>
-        </ng-container>
-
-        <br>
-
-        <p id="data"></p>
-
-        <div class="btn2-group ml-2 d-flex align-items-center">
-          <button (click)="printTable()" type="button" class="btn2 btn2-outline-secondary">Imprimir</button>
-          <button mat-raised-button (click)="saveTable()" type="button" class="btn2 btn2-outline-secondary">Guardar
-            Tabela</button>
-        </div>
-
-        <div class="footer2">
-          <p>&copy; 2023 Tabela Terapeutica. Juntos por melhores resultados! <br>Visite o nosso Website:
-            www.tabelaterapeutica.pt</p>
-        </div>
-      </div>
-
-    </section>
-
-    <ng-container *ngIf="">
-      <p>No data available.</p>
-    </ng-container>
-  </div>
-
-  <div class="footer" style="background-color: #677F88;">
-    <div class="footerContainer">
-      <div class="footerRow">
-        <div class="footer-col">
+    <!-- FOOTER -->
+    <footer class="footer-glass">
+      <div class="footer-content">
+        <div>
           <h4>A empresa</h4>
-          <ul>
-            <li><a href="#">Sobre nós</a></li>
-            <li><a href="#">Politica de Privacidade</a></li>
-            <li><a href="#">Termos e condições</a></li>
-          </ul>
+          <a href="#">Sobre nós</a>
+          <a href="#">Politica de Privacidade</a>
+          <a href="#">Termos e condições</a>
         </div>
-        <div class="footer-col">
+        <div>
           <h4>Ajuda</h4>
-          <ul>
-            <li><a href="#">FAQ</a></li>
-            <li class="footerEmail"><a class="footerEmail"
-                href="mailto:suporte@tabelaterapeutica.pt">suporte&#64;tabelaterapeutica.pt</a></li>
-          </ul>
+          <a href="#">FAQ</a>
+          <a href="mailto:suporte@tabelaterapeutica.pt">suporte@tabelaterapeutica.pt</a>
         </div>
-
-        <div class="footer-col">
+        <div>
           <h4>Siga-nos</h4>
           <div class="social-links">
             <a href="https://www.facebook.com/tterapeutica/"><i class="fab fa-facebook-f"></i></a>
@@ -235,10 +148,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   </div>
 </body>
-
-
-
-</html>
