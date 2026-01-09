@@ -15,9 +15,10 @@ import { AiParserService } from 'src/app/ai/ai-parser.service';
 import { RxParseService } from 'src/app/services/rx-parse.service';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+    selector: 'app-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.css'],
+    standalone: false
 })
 
 

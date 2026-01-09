@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import ValidateForm from 'src/app/helpers/validateform';
 import { DataBaseService } from 'src/app/services/database.service';
 @Component({
-  selector: 'app-new-password',
-  templateUrl: './new-password.component.html',
-  styleUrls: ['./new-password.component.css']
+    selector: 'app-new-password',
+    templateUrl: './new-password.component.html',
+    styleUrls: ['./new-password.component.css'],
+    standalone: false
 })
 export class NewPasswordComponent {
 

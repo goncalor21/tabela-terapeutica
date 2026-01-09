@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, SOCIAL_AUTH_CONFIG } from '@abacritt/angularx-social-login';
 import { MainComponent } from '../app/components/main/main.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
@@ -20,7 +20,7 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { ProfileComponent } from './components/profile/profile.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { NgToastModule } from 'ng-angular-popup';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventEmitterService } from './services/event-emitter.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MainPopUpComponent } from '../app/components/main-pop-up/main-pop-up.component'
@@ -35,12 +35,9 @@ import { NewPasswordComponent } from '../app/components/new-password/new-passwor
     SignupComponent,
     TermsComponent,
     ProfileComponent,
-    MainComponent,
     MainPopUpComponent,
     VerifiedEmailComponent,
     NewPasswordComponent,
-    
-    
   ],
   imports: [
     BrowserModule,
@@ -56,7 +53,7 @@ import { NewPasswordComponent } from '../app/components/new-password/new-passwor
     MatToolbarModule,
     MatInputModule,
     MatAutocompleteModule,
-    NgToastModule,
+    MatSnackBarModule,
     MatPaginatorModule,
     MatButtonToggleModule,
     MatDialogModule,
@@ -67,7 +64,8 @@ import { NewPasswordComponent } from '../app/components/new-password/new-passwor
   ],
   providers: [
     {
-      provide: 'SocialAuthServiceConfig',
+      // Use the actual injection token exported by the library to ensure DI works in Angular 20
+      provide: SOCIAL_AUTH_CONFIG,
       useValue: {
         autoLogin: false,
         providers: [
