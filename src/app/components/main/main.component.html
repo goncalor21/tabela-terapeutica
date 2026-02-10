@@ -1,153 +1,219 @@
-<body>
-  <div class="page-wrapper">
-
-    <!-- HEADER -->
-    <header class="header-glass">
-      <div class="logo" (click)="reloadPage()"></div>
-      <nav class="header-actions">
-        <a href="/profile" class="profile-btn" *ngIf="isLoggedIn">
-          <i class="fas fa-user-circle"></i> Perfil
+<!-- Main container -->
+<div class="mainShell">
+  
+  <!-- Header with Material toolbar -->
+  <mat-toolbar class="app-toolbar">
+    <div class="toolbar-content">
+      <div class="logo-section" (click)="reloadPage()">
+        <img class="logo" src="assets/LogoSemTexto.png" alt="Tabela Terapêutica" />
+        <span class="app-title">Tabela Terapêutica</span>
+      </div>
+      
+      <div class="toolbar-actions">
+        <button mat-icon-button (click)="openDialog()" matTooltip="Ajuda">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+        <a href="/profile" mat-button class="profile-btn" *ngIf="isLoggedIn">
+          <mat-icon>account_circle</mat-icon>
+          <span>Perfil</span>
         </a>
-      </nav>
-    </header>
+      </div>
+    </div>
+  </mat-toolbar>
 
-    <!-- INPUT AREA -->
-    <main class="main-section">
-      <form (submit)="handleSubmit()" class="glass-form">
-        <textarea [(ngModel)]="textareaValue" name="Prescricao" id="pres1"
-          placeholder="Digite a prescrição..."></textarea>
-        <button type="submit" class="btn-primary">⚡ Gerar Documento</button>
+  <!-- Main content area -->
+  <main class="main-content">
+    
+    <!-- Input section -->
+    <section class="input-section">
+      <h2>Insira a Prescrição Médica</h2>
+      <form (submit)="handleSubmit()" class="prescription-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Prescrição</mat-label>
+          <textarea 
+            matInput 
+            [(ngModel)]="textareaValue" 
+            name="Prescricao" 
+            id="pres1"
+            placeholder="Cole ou digite a prescrição médica aqui..."
+            rows="8"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="8"
+            cdkAutosizeMaxRows="15"></textarea>
+          <mat-hint>Exemplo: Paracetamol 500mg, 1 comprimido de 8/8h</mat-hint>
+        </mat-form-field>
+        
+        <div class="form-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit"
+            [disabled]="isLoading || !textareaValue || textareaValue.trim().length === 0">
+            <mat-icon *ngIf="!isLoading">auto_awesome</mat-icon>
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            {{ isLoading ? 'Processando...' : 'Gerar Tabela' }}
+          </button>
+        </div>
       </form>
+    </section>
 
-      <!-- TABLE PREVIEW -->
-      <section id="pre_visualizacao" class="glass-preview">
+    <!-- Preview/Output section -->
+    <section class="preview-section" *ngIf="dataSource.length > 0" [@fadeInSlide]>
+      <div class="section-header">
+        <h2>Tabela de Medicação</h2>
+        <div class="action-buttons">
+          <button 
+            mat-icon-button 
+            (click)="toggleEditMode()" 
+            [color]="isEditMode ? 'primary' : ''"
+            matTooltip="{{ isEditMode ? 'Sair do modo edição' : 'Editar tabela' }}">
+            <mat-icon>{{ isEditMode ? 'done' : 'edit' }}</mat-icon>
+          </button>
+          <button 
+            mat-icon-button 
+            (click)="printTable()"
+            matTooltip="Imprimir tabela">
+            <mat-icon>print</mat-icon>
+          </button>
+          <button 
+            mat-icon-button 
+            (click)="saveTableClicked()" 
+            *ngIf="isLoggedIn"
+            matTooltip="Guardar tabela">
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
+      </div>
 
-        <table mat-table [dataSource]="dataSource" class="styled-table mat-elevation-z8" #elRef>
-
-          <!-- Comprimido -->
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="medication-table" #elRef>
+          
+          <!-- Comprimido Column -->
           <ng-container matColumnDef="comprimido">
-            <th mat-header-cell *matHeaderCellDef class="header"> Comprimido </th>
+            <th mat-header-cell *matHeaderCellDef>Medicamento</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else comprimidoView">
-                <input class="editTableInput" [(ngModel)]="element.comprimido" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.comprimido" />
+                </mat-form-field>
               </ng-container>
               <ng-template #comprimidoView>{{ element.comprimido }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Jejum -->
+          <!-- Jejum Column -->
           <ng-container matColumnDef="jejum">
-            <th mat-header-cell *matHeaderCellDef class="header"> Jejum </th>
+            <th mat-header-cell *matHeaderCellDef>Jejum</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else jejumView">
-                <input class="editTableInput" [(ngModel)]="element.jejum" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.jejum" />
+                </mat-form-field>
               </ng-container>
               <ng-template #jejumView>{{ element.jejum }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Pequeno Almoço -->
+          <!-- Pequeno Almoço Column -->
           <ng-container matColumnDef="peqAlmoco">
-            <th mat-header-cell *matHeaderCellDef class="header"> P. Almoço </th>
+            <th mat-header-cell *matHeaderCellDef>Pequeno Almoço</th>
             <td mat-cell *matCellDef="let element">
-              <ng-container *ngIf="isEditMode; else peqView">
-                <input class="editTableInput" [(ngModel)]="element.peqAlmoco" />
+              <ng-container *ngIf="isEditMode; else peqAlmocoView">
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.peqAlmoco" />
+                </mat-form-field>
               </ng-container>
-              <ng-template #peqView>{{ element.peqAlmoco }}</ng-template>
+              <ng-template #peqAlmocoView>{{ element.peqAlmoco }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Almoço -->
+          <!-- Almoço Column -->
           <ng-container matColumnDef="almoco">
-            <th mat-header-cell *matHeaderCellDef class="header"> Almoço </th>
+            <th mat-header-cell *matHeaderCellDef>Almoço</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else almocoView">
-                <input class="editTableInput" [(ngModel)]="element.almoco" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.almoco" />
+                </mat-form-field>
               </ng-container>
               <ng-template #almocoView>{{ element.almoco }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Lanche -->
+          <!-- Lanche Column -->
           <ng-container matColumnDef="lanche">
-            <th mat-header-cell *matHeaderCellDef class="header"> Lanche </th>
+            <th mat-header-cell *matHeaderCellDef>Lanche</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else lancheView">
-                <input class="editTableInput" [(ngModel)]="element.lanche" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.lanche" />
+                </mat-form-field>
               </ng-container>
               <ng-template #lancheView>{{ element.lanche }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Jantar -->
+          <!-- Jantar Column -->
           <ng-container matColumnDef="jantar">
-            <th mat-header-cell *matHeaderCellDef class="header"> Jantar </th>
+            <th mat-header-cell *matHeaderCellDef>Jantar</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else jantarView">
-                <input class="editTableInput" [(ngModel)]="element.jantar" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.jantar" />
+                </mat-form-field>
               </ng-container>
               <ng-template #jantarView>{{ element.jantar }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Ao Deitar -->
+          <!-- Deitar Column -->
           <ng-container matColumnDef="deitar">
-            <th mat-header-cell *matHeaderCellDef class="header"> Ao deitar </th>
+            <th mat-header-cell *matHeaderCellDef>Deitar</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else deitarView">
-                <input class="editTableInput" [(ngModel)]="element.deitar" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.deitar" />
+                </mat-form-field>
               </ng-container>
               <ng-template #deitarView>{{ element.deitar }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Notas -->
+          <!-- Notas Column -->
           <ng-container matColumnDef="notas">
-            <th mat-header-cell *matHeaderCellDef class="header"> Notas </th>
+            <th mat-header-cell *matHeaderCellDef>Notas</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="isEditMode; else notasView">
-                <input class="editTableInput" [(ngModel)]="element.notas" />
+                <mat-form-field appearance="outline" class="table-input">
+                  <input matInput [(ngModel)]="element.notas" />
+                </mat-form-field>
               </ng-container>
               <ng-template #notasView>{{ element.notas }}</ng-template>
             </td>
           </ng-container>
 
-          <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
-
-        <div class="preview-actions">
-          <button *ngIf="tableId" (click)="onRowClick()" class="btn-secondary">✏ Editar</button>
-          <button (click)="printTable()" class="btn-primary">🖨 Imprimir</button>
-        </div>
-      </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="footer-glass">
-      <div class="footer-content">
-        <div>
-          <h4>A empresa</h4>
-          <a href="#">Sobre nós</a>
-          <a href="#">Politica de Privacidade</a>
-          <a href="#">Termos e condições</a>
-        </div>
-        <div>
-          <h4>Ajuda</h4>
-          <a href="#">FAQ</a>
-          <a href="mailto:suporte@tabelaterapeutica.pt">suporte&#64;tabelaterapeutica.pt</a>
-        </div>
-        <div>
-          <h4>Siga-nos</h4>
-          <div class="social-links">
-            <a href="https://www.facebook.com/tterapeutica/"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com/TTerapeutica"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.instagram.com/tabelaterapeutica/"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
       </div>
-    </footer>
-  </div>
-</body>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 Tabela Terapêutica. Ferramenta de apoio médico.</p>
+      <div class="footer-links">
+        <a href="https://www.facebook.com" target="_blank" mat-icon-button>
+          <mat-icon>facebook</mat-icon>
+        </a>
+        <a href="mailto:support@example.com" mat-icon-button>
+          <mat-icon>alternate_email</mat-icon>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</div>

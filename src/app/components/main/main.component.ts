@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { MatTable } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataBaseService } from '../../services/database.service';
 import { Router } from '@angular/router';
 import { Table } from 'src/app/models/table';
@@ -13,12 +14,21 @@ import { MatDialog } from '@angular/material/dialog';
 import { MainPopUpComponent } from '../main-pop-up/main-pop-up.component';
 import { AiParserService } from 'src/app/ai/ai-parser.service';
 import { RxParseService } from 'src/app/services/rx-parse.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
     selector: 'app-main',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.css'],
-    standalone: false
+    standalone: false,
+    animations: [
+      trigger('fadeInSlide', [
+        transition(':enter', [
+          style({ opacity: 0, transform: 'translateY(10px)' }),
+          animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        ])
+      ])
+    ]
 })
 
 
@@ -35,8 +45,11 @@ export class MainComponent {
     private db: DataBaseService,
     private router: Router,
     private rx: RxParseService,
-    private eventEmitter: EventEmitterService, private dialogRef: MatDialog,
-    private location: Location, private renderer: Renderer2) { }
+    private eventEmitter: EventEmitterService,
+    private dialogRef: MatDialog,
+    private location: Location,
+    private renderer: Renderer2,
+    private snackBar: MatSnackBar) { }
 
   isPrinting: boolean = false;
   isEditMode: boolean = false;
@@ -78,16 +91,26 @@ export class MainComponent {
   }
 
   ngOnInit(): void {
-    this.db.getTables().subscribe((tables) => {
-      if (tables.length > 0) {
-        this.fetchedTables = tables;
-        this.isLoggedIn = this.db.isLoggedIn();
-        if (this.eventEmitter.getIdTable().length != 0) {
-          this.showTable(this.eventEmitter.getIdTable());
+    // Set login status immediately
+    this.isLoggedIn = this.db.isLoggedIn();
+    
+    // Only fetch tables if logged in
+    if (this.isLoggedIn) {
+      this.db.getTables().subscribe({
+        next: (tables) => {
+          if (tables.length > 0) {
+            this.fetchedTables = tables;
+            if (this.eventEmitter.getIdTable().length != 0) {
+              this.showTable(this.eventEmitter.getIdTable());
+            }
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching tables:', err);
+          // Silently fail - user can still use the parser without saved tables
         }
-      }
-    });
-
+      });
+    }
   }
 
   public onSearch(): void {
@@ -191,6 +214,14 @@ export class MainComponent {
     return check;
   }
 
+  public saveTableClicked(): void {
+    if (this.isLoggedIn) {
+      this.saveTableAfterEdit();
+    } else {
+      this.snackBar.open("Por favor registe-se", 'OK', { duration: 5000 });
+    }
+  }
+
   private showAreaTextAfterSearch(element: Table): void {
     this.textareaValue = '';
     var textTransformed: string = "";
@@ -201,7 +232,8 @@ export class MainComponent {
       textTransformed = "";
       cont = 0;
       if (tableElement == null) {
-        alert("Existe algo de errado com a tabela.");
+        console.error("Existe algo de errado com a tabela.");
+        return;
       }
       textTransformed += tableElement.comprimido;
       if (this.tableLengthCheck(tableElement) > 1) {
@@ -280,6 +312,10 @@ export class MainComponent {
   }
 
 
+  toggleEditMode() {
+    this.isEditMode = !this.isEditMode;
+  }
+
   onRowClick() {
     // Set the selected row to edit mode
     this.isEditMode = true;
@@ -332,10 +368,11 @@ export class MainComponent {
         this.db.editTable(savingElement).subscribe({
           next: (res) => {
             this.dataSourceAfterSearchLength = this.dataSource.length;
+            this.snackBar.open('Tabela atualizada com sucesso', 'OK', { duration: 3000 });
             this.router.navigate(['mainPage']);
           },
           error: (err) => {
-            alert(err?.error.message)
+            this.snackBar.open(err?.error?.message || 'Erro ao guardar', 'OK', { duration: 5000 });
           }
         });
       }
@@ -369,18 +406,18 @@ export class MainComponent {
 
         this.db.saveTable(savingElement).subscribe({
           next: (res) => {
-            alert(res.message)
+            this.snackBar.open(res.message, 'OK', { duration: 3000 });
             this.router.navigate(['mainPage']);
           },
           error: (err) => {
-            alert(err?.error.message)
+            this.snackBar.open(err?.error?.message || 'Erro ao guardar', 'OK', { duration: 5000 });
           }
         });
       } else {
-        alert("Existe algo de errado com a tabela!")
+        this.snackBar.open("Existe algo de errado com a tabela!", 'OK', { duration: 5000 });
       }
     } else {
-      alert("Por favor registe-se");
+      this.snackBar.open("Por favor registe-se", 'OK', { duration: 5000 });
     }
   }
 

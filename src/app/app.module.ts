@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -51,6 +54,9 @@ import { NewPasswordComponent } from '../app/components/new-password/new-passwor
     MatTableModule,
     MatIconModule,
     MatToolbarModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatTooltipModule,
     MatInputModule,
     MatAutocompleteModule,
     MatSnackBarModule,

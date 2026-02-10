@@ -1,223 +1,373 @@
-/* General reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+/* ============================================
+   CLEAN PROFESSIONAL DESIGN - NO GRADIENTS, NO BORDER-RADIUS
+   ============================================ */
 
-body {
-  background: linear-gradient(135deg, #1f1c2c, #928dab);
-  color: #fff;
+/* Main container */
+.mainShell {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: start;
+  flex-direction: column;
+  background-color: #f5f5f5;
 }
 
-.page-wrapper {
+/* ============================================
+   TOOLBAR / HEADER
+   ============================================ */
+.app-toolbar {
+  background-color: #ffffff;
+  color: #333;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.toolbar-content {
   width: 100%;
   max-width: 1400px;
-  padding: 20px;
-}
-
-/* Glassmorphism card */
-.glass-form,
-.glass-preview,
-.footer-glass,
-.header-glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 16px;
-  padding: 20px;
-  margin: 20px 0;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* HEADER */
-.header-glass {
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 16px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.logo-section:hover {
+  opacity: 0.8;
 }
 
 .logo {
-  width: 140px;
-  height: 50px;
-  background: url('../../../assets/SemFundo_Branco.png') no-repeat center/contain;
-  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .profile-btn {
-  background: rgba(255, 255, 255, 0.15);
-  padding: 10px 20px;
-  border-radius: 30px;
-  color: #fff;
-  text-decoration: none;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.profile-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 24px;
 }
 
-/* FORM */
-.glass-form {
+/* ============================================
+   INPUT SECTION
+   ============================================ */
+.input-section {
+  background: white;
+  padding: 32px;
+  margin-bottom: 32px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.input-section h2 {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.prescription-form {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 20px;
+  gap: 16px;
 }
 
-textarea {
+.full-width {
   width: 100%;
-  min-height: 180px;
-  border: none;
-  border-radius: 16px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-actions button {
+  min-width: 180px;
+  height: 48px;
   font-size: 16px;
-  resize: none;
-  outline: none;
+  font-weight: 500;
 }
 
-textarea::placeholder {
-  color: #ddd;
+.form-actions button mat-icon {
+  margin-right: 8px;
 }
 
-.btn-primary,
-.btn-secondary {
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.form-actions button mat-spinner {
+  margin-right: 8px;
 }
 
-.btn-primary {
-  background: linear-gradient(90deg, #ff8a00, #e52e71);
-  color: #fff;
+/* ============================================
+   PREVIEW / OUTPUT SECTION
+   ============================================ */
+.preview-section {
+  background: white;
+  padding: 32px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  animation: fadeInSlide 0.3s ease-out;
 }
 
-.btn-primary:hover {
-  box-shadow: 0 0 20px rgba(229, 46, 113, 0.6);
-  transform: translateY(-2px);
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* PREVIEW */
-.glass-preview {
-  margin-top: 40px;
-}
-
-.preview-header {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.preview-actions {
+.section-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.action-buttons {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 8px;
 }
 
-/* FOOTER */
-.footer-glass {
-  text-align: center;
-  padding: 30px 10px;
+/* ============================================
+   TABLE
+   ============================================ */
+.table-container {
+  overflow-x: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.medication-table {
+  width: 100%;
+  background: white;
+}
+
+.medication-table th {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 16px 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.medication-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #333;
+  font-size: 14px;
+}
+
+.medication-table tr:last-child td {
+  border-bottom: none;
+}
+
+.medication-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Table input fields (edit mode) */
+.table-input {
+  width: 100%;
+  margin: -8px 0;
+}
+
+.table-input mat-form-field {
+  font-size: 14px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.app-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  padding: 24px 16px;
+  margin-top: auto;
 }
 
 .footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.footer-content h4 {
-  margin-bottom: 10px;
-  color: #fff;
+.footer-content p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
 }
 
-.footer-content a {
-  display: block;
-  margin: 5px 0;
-  color: #ddd;
-  text-decoration: none;
-  transition: color 0.3s ease;
+.footer-links {
+  display: flex;
+  gap: 8px;
 }
 
-.footer-content a:hover {
-  color: #fff;
+.footer-links a {
+  color: #666;
+  transition: color 0.2s ease;
 }
 
-.social-links a {
-  margin: 0 10px;
-  font-size: 20px;
-  color: #fff;
-  transition: transform 0.3s ease;
+.footer-links a:hover {
+  color: #1976d2;
 }
 
-.social-links a:hover {
-  transform: scale(1.3);
-  color: #ff8a00;
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .app-toolbar,
+  .action-buttons,
+  .app-footer,
+  .input-section,
+  .form-actions {
+    display: none !important;
+  }
+
+  .mainShell {
+    background: white;
+  }
+
+  .preview-section {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .table-container {
+    border: 1px solid #000;
+  }
+
+  .medication-table th {
+    background-color: #f0f0f0 !important;
+    color: #000 !important;
+    border: 1px solid #000;
+  }
+
+  .medication-table td {
+    border: 1px solid #000;
+  }
 }
 
-.styled-table {
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 20px 16px;
+  }
+
+  .input-section,
+  .preview-section {
+    padding: 20px;
+  }
+
+  .app-title {
+    display: none;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .table-container {
+    font-size: 12px;
+  }
+
+  .medication-table th,
+  .medication-table td {
+    padding: 8px 6px;
+    font-size: 12px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-section h2,
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   MATERIAL DESIGN OVERRIDES
+   ============================================ */
+::ng-deep .mat-mdc-form-field {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  overflow: hidden;
-  color: #fff;
-  font-size: 15px;
 }
 
-.styled-table th {
-  background: rgba(255, 255, 255, 0.15);
-  text-align: center;
-  padding: 12px;
-  font-weight: 600;
-  color: #ffffff;
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #fafafa;
 }
 
-.styled-table td {
-  text-align: center;
-  padding: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+::ng-deep .mat-mdc-raised-button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
-.styled-table tr:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transition: background 0.3s ease;
+::ng-deep .mat-mdc-raised-button:hover:not([disabled]) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
 }
 
-.editTableInput {
-  width: 100%;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-}
-
-.editTableInput:focus {
-  background: rgba(255, 255, 255, 0.3);
+::ng-deep .mat-mdc-icon-button {
+  transition: background-color 0.2s ease;
 }
